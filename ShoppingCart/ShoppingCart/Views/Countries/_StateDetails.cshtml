@@ -1,4 +1,5 @@
-﻿@model ShoppingCart.Data.Entities.Country
+﻿
+@model ShoppingCart.Data.Entities.State
 
 
 <dl class="row">
@@ -9,9 +10,10 @@
         @Html.DisplayFor(model => model.Name)
     </dd>
      <dt class="col-sm-2">
-        @Html.DisplayNameFor(model => model.StatesNumber)
+        @Html.DisplayNameFor(model => model.CitiesNumber)
     </dt>
     <dd class="col-sm-12">
-        @Html.DisplayFor(model => model.StatesNumber)
+        @Html.DisplayFor(model => model.CitiesNumber)
     </dd>
 </dl>
+
