@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Data;
 using ShoppingCart.Data.Entities;
 
 namespace ShoppingCart.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoriesController:Controller
     {
         private readonly DataContext _context;

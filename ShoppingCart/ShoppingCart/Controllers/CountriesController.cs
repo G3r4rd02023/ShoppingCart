@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Data;
 using ShoppingCart.Data.Entities;
@@ -11,6 +7,7 @@ using ShoppingCart.Models;
 
 namespace ShoppingCart.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CountriesController : Controller
     {
         private readonly DataContext _context;
@@ -20,17 +17,17 @@ namespace ShoppingCart.Controllers
             _context = context;
         }
 
-        
+
         public async Task<IActionResult> Index()
         {
-              return _context.Countries != null ? 
-                          View(await _context.Countries.
-                          Include(c=>c.States)
-                          .ToListAsync()) :
-                          Problem("Entity set 'DataContext.Countries'  is null.");
+            return _context.Countries != null ?
+                        View(await _context.Countries.
+                        Include(c => c.States)
+                        .ToListAsync()) :
+                        Problem("Entity set 'DataContext.Countries'  is null.");
         }
 
-        
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Countries == null)
@@ -39,7 +36,7 @@ namespace ShoppingCart.Controllers
             }
 
             var country = await _context.Countries
-                .Include(c=>c.States)
+                .Include(c => c.States)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (country == null)
             {
@@ -49,7 +46,7 @@ namespace ShoppingCart.Controllers
             return View(country);
         }
 
-        
+
         public IActionResult Create()
         {
             Country country = new()
@@ -59,7 +56,7 @@ namespace ShoppingCart.Controllers
             return View();
         }
 
-       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Country country)
@@ -91,7 +88,7 @@ namespace ShoppingCart.Controllers
             return View(country);
         }
 
-        
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Countries == null)
@@ -107,10 +104,10 @@ namespace ShoppingCart.Controllers
             return View(country);
         }
 
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,  Country country)
+        public async Task<IActionResult> Edit(int id, Country country)
         {
             if (id != country.Id)
             {
@@ -177,14 +174,14 @@ namespace ShoppingCart.Controllers
             {
                 _context.Countries.Remove(country);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> AddState(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }
@@ -222,7 +219,7 @@ namespace ShoppingCart.Controllers
 
                     _context.Add(state);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Details), new {Id = model.CountryId});
+                    return RedirectToAction(nameof(Details), new { Id = model.CountryId });
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
@@ -251,7 +248,7 @@ namespace ShoppingCart.Controllers
             }
 
             var state = await _context.States
-                .Include(s=>s.Country)
+                .Include(s => s.Country)
                 .FirstOrDefaultAsync(s => s.Id == id);
             if (state == null)
             {
@@ -305,7 +302,7 @@ namespace ShoppingCart.Controllers
                 {
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
-                return RedirectToAction(nameof(Details),new {Id = model.CountryId});
+                return RedirectToAction(nameof(Details), new { Id = model.CountryId });
             }
             return View(model);
         }
@@ -362,7 +359,7 @@ namespace ShoppingCart.Controllers
 
                     City city = new()
                     {
-                       
+
                         State = await _context.States.FindAsync(model.StateId),
                         Name = model.Name,
                     };
