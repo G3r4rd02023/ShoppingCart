@@ -30,12 +30,13 @@ namespace ShoppingCart.Data.Entities
         public string Address { get; set; }
 
         [Display(Name = "Foto")]
-        public Guid ImageId { get; set; }
+        public string? ImageUrl { get; set; }
 
         [Display(Name = "Foto")]
-        public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://localhost:7057/images/noimage.png"
-            : $"https://shoppingzulu.blob.core.windows.net/users/{ImageId}";
+        public string ImageFullPath => string.IsNullOrEmpty(ImageUrl)
+            ? null
+            : $"https://localhost:7057/images/noimage.png";
+           // : $"https://mystoreweb.azurewebsites.net{ImageUrl.Substring(1)}";
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
