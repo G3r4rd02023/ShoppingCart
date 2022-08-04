@@ -2,6 +2,8 @@
 {
     public class ImageHelper : IImageHelper
     {
+       
+
         public async Task<string> UploadImageAsync(IFormFile imageFile, string folder)
         {
             string guid = Guid.NewGuid().ToString();

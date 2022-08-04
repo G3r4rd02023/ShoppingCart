@@ -36,6 +36,9 @@ fa-bag-shopping text-white"></i>ShoppingCart</a>
                         <li class="nav-item">
                         <a class="nav-link text-white" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
                         </li>
+                         <li class="nav-item">
+                        <a class="nav-link text-white" asp-area="" asp-controller="Products" asp-action="Index">Productos</a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
