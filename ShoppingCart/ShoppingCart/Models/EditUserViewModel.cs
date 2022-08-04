@@ -42,7 +42,7 @@ namespace ShoppingCart.Models
             : $"https://localhost:7110{ImageUrl[1..]}";
 
         [Display(Name = "Foto")]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
 
         [Display(Name = "País")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un país.")]
