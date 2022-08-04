@@ -35,8 +35,8 @@ namespace ShoppingCart.Data.Entities
         [Display(Name = "Foto")]
         public string ImageFullPath => string.IsNullOrEmpty(ImageUrl)
             ? null
-            : $"https://localhost:7057/images/noimage.png";
-           // : $"https://mystoreweb.azurewebsites.net{ImageUrl.Substring(1)}";
+            //: $"https://localhost:7110/images/noimage.png";
+           : $"https://localhost:7110/{ImageUrl.Substring(1)}";
 
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }
