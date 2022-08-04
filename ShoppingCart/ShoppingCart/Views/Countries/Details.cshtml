@@ -14,7 +14,7 @@
 </div>
 <div>
     <a asp-action="AddState" asp-route-id="@Model?.Id" class="btn btn-outline-primary">Agregar Estado</a>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar Pais</a> 
+    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-outline-warning">Editar Pais</a>
     <a asp-action="Index" class="btn btn-outline-success">Cancelar</a>
 </div>
 <hr />
@@ -31,7 +31,7 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.States.FirstOrDefault().Name)
                             </th>
-                           <th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.States.FirstOrDefault().CitiesNumber)
                             </th>
                         </tr>
@@ -47,9 +47,13 @@
                                     @Html.DisplayFor(modelItem => item.CitiesNumber)
                                 </td>
                                 <td>
-                                    <a asp-action="EditState" asp-route-id="@item.Id" class="btn btn-outline-warning">Editar</a>
-                                    <a asp-action="DetailsState" asp-route-id="@item.Id" class="btn btn-outline-info">Detalles</a>
-                                    <a asp-action="DeleteState" asp-route-id="@item.Id" class="btn btn-outline-danger">Borrar</a>
+                                    <a asp-action="EditState" asp-route-id="@item.Id" class="btn btn-outline-warning">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a asp-action="DetailsState" asp-route-id="@item.Id" class="btn btn-outline-info">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </a>
+                                    <a asp-action="DeleteState" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
                                 </td>
                             </tr>
                         }
