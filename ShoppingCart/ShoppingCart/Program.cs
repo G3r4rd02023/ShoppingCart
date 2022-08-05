@@ -37,6 +37,7 @@ builder.Services.AddTransient<SeedDb>();
 builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddScoped<IImageHelper, ImageHelper>();
+builder.Services.AddScoped<IOrderHelper, OrderHelper>();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

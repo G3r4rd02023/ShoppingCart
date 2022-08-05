@@ -25,7 +25,7 @@
     margin: 5px;
 }
 
-.card_title {
+/*.card_title {
     font-size: 24px;
     padding: 10px 10px 0 10px;
 }
@@ -54,7 +54,7 @@
         left: 0;
         z-index: 1;
         content: ""
-    }
+    }*/
 /*Zoom images*/
 .zoom {
     padding: 5px;
@@ -70,3 +70,15 @@
         -webkit-transform: scale(2); /* Safari 3-8 */
         transform: scale(2);
     }
+
+.carousel-inner {
+    width: auto;
+    height: 500px;
+    max-height: 500px !important;
+}
+
+.carousel-content {
+    color: black;
+    display: flex;
+    text-align: center;
+}
