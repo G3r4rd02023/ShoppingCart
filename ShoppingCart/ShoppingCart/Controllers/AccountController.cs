@@ -5,6 +5,7 @@ using ShoppingCart.Data.Entities;
 using ShoppingCart.Enums;
 using ShoppingCart.Helpers;
 using ShoppingCart.Models;
+using Vereyon.Web;
 
 namespace ShoppingCart.Controllers
 {
@@ -15,13 +16,15 @@ namespace ShoppingCart.Controllers
         private readonly DataContext _context;
         private readonly ICombosHelper _combosHelper;
         private readonly IImageHelper _imageHelper;
+        private readonly IFlashMessage _flashMessage;
         public AccountController(IUserHelper userHelper,DataContext context,
-            ICombosHelper combosHelper,IImageHelper imageHelper)
+            ICombosHelper combosHelper, IImageHelper imageHelper, IFlashMessage flashMessage)
         {
             _userHelper = userHelper;
             _context = context;
             _combosHelper = combosHelper;
             _imageHelper = imageHelper;
+            _flashMessage = flashMessage;
         }
 
         public IActionResult NotAuthorized()
@@ -102,7 +105,7 @@ namespace ShoppingCart.Controllers
 
                 if (user == null)
                 {
-                    ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado.");
+                    _flashMessage.Danger("Este correo ya está siendo usado.");
                     model.Countries = await _combosHelper.GetComboCountriesAsync();
                     model.States = await _combosHelper.GetComboStatesAsync(model.CountryId);
                     model.Cities = await _combosHelper.GetComboCitiesAsync(model.StateId);

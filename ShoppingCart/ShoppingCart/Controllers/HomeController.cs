@@ -31,15 +31,43 @@ namespace ShoppingCart.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
+            ViewData["NameSortParm"] = string.IsNullOrEmpty(sortOrder) ? "NameDesc" : "";
+            ViewData["PriceSortParm"] = sortOrder == "Price" ? "PriceDesc" : "Price";
+            IQueryable<Product> query = _context.Products
+            .Include(p => p.ProductImages)
+            .Include(p => p.ProductCategories)
+            .Where(p => p.Stock > 0);
+            switch (sortOrder)
+            {
+                case "NameDesc":
+                    query = query.OrderByDescending(p => p.Name);
+                    break;
+                case "Price":
+                    query = query.OrderBy(p => p.Price);
+                    break;
+                case "PriceDesc":
+                    query = query.OrderByDescending(p => p.Price);
+                    break;
+                   
+            default:
+                    query = query.OrderBy(p => p.Name);
+                    break;
+            }
+            HomeViewModel model = new()
+            {
+                Products = await query.ToListAsync(),
+                Categories = await _context.Categories.ToListAsync(),
+            };
             List<Product> products = await _context.Products
             .Include(p => p.ProductImages)
             .Include(p => p.ProductCategories)
             .OrderBy(p => p.Description)
             .Where(p => p.Stock > 0)
             .ToListAsync();
-            HomeViewModel model = new() { Products = products };
+
+             model = new() { Products = products };
             User user = await _userHelper.GetUserAsync(User.Identity.Name);
             if (user != null)
             {

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ShoppingCart.Data;
 using ShoppingCart.Data.Entities;
 using ShoppingCart.Helpers;
+using Vereyon.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,8 @@ builder.Services.AddScoped<IUserHelper, UserHelper>();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 builder.Services.AddScoped<IImageHelper, ImageHelper>();
 builder.Services.AddScoped<IOrderHelper, OrderHelper>();
+builder.Services.AddFlashMessage();
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {

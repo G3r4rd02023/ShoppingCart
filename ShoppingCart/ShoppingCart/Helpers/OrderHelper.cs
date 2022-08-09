@@ -1,4 +1,7 @@
-﻿using ShoppingCart.Common;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ShoppingCart.Common;
 using ShoppingCart.Data;
 using ShoppingCart.Data.Entities;
 using ShoppingCart.Enums;
@@ -13,6 +16,25 @@ namespace ShoppingCart.Helpers
         public OrderHelper(DataContext context)
         {
             _context = context;
+        }
+
+        public async Task<Response> CancelOrderAsync(int id)
+        {
+            Sale sale = await _context.Sales
+            .Include(s => s.SaleDetails)
+            .ThenInclude(sd => sd.Product)
+            .FirstOrDefaultAsync(s => s.Id == id);
+            foreach (SaleDetail saleDetail in sale.SaleDetails)
+            {
+                Product product = await _context.Products.FindAsync(saleDetail.Product.Id);
+                if (product != null)
+                {
+                    product.Stock += saleDetail.Quantity;
+                }
+            }
+            sale.OrderStatus = OrderStatus.Cancelado;
+            await _context.SaveChangesAsync();
+            return new Response { IsSuccess = true };
         }
 
         public async Task<Response> ProcessOrderAsync(ShowCartViewModel model)
@@ -72,7 +94,6 @@ namespace ShoppingCart.Helpers
             }
             return response;
         }
-
-        
+       
     }
 }
